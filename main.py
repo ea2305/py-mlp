@@ -1,13 +1,7 @@
 import numpy as np
 from random import random
 
-# activations & derivatives
-# backpropagation
-# gradient descent
-# train
-    # load dataset
-    # make predictions
-
+# Simple MLP Implementation
 class Mlp:
     def __init__(self, numInputs = 3, numHidden = [3, 5], numOutputs = 2):
         self.numInputs = numInputs
@@ -67,7 +61,7 @@ class Mlp:
             derivative = self.derivatives[i]
             weights += derivative * learning_rate
 
-    def training(self, inputs, targets, epochs, learningRate):
+    def training(self, inputs, targets, epochs, learningRate, debug = False):
         for i in range(epochs):
             sumError = 0
             for input, target in zip(inputs, targets):
@@ -78,8 +72,8 @@ class Mlp:
 
                 # report error
                 sumError += self._mse(target, output)
-            
-            print("Error: {} at epoch {}".format(sumError / len(inputs), i))
+            if debug:
+                print("Error: {} at epoch {}".format(sumError / len(inputs), i))
 
     def _mse(self, target, output):
         return np.average((target - output)**2)
@@ -107,16 +101,3 @@ if __name__ == "__main__":
     output = mlp.fwdPropagation(input)
     print("")
     print("Network x:{} + y:{} = {}".format(input[0], input[1], output[0]))
-
-    # # create inputs
-    # inputs = np.array([0.1, 0.2])
-    # target = np.array([0.3])
-    # # outputs
-    # outputs = mlp.fwdPropagation(inputs)
-    # error = target - outputs
-    # mlp.backpropagation(error, False)
-
-    # mlp.gradientDescent(0.08)
-
-    # print("input: {}".format(inputs))
-    # print("output: {}".format(outputs))
